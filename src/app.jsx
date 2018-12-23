@@ -1,11 +1,8 @@
 import React from 'react';
+import ContactsPage from './pages/contacts';
 
 const App = () => (
-  <div>
-    <h1>
-      Phonebook
-    </h1>
-  </div>
+  <ContactsPage />
 );
 
 export default App;
