@@ -1,8 +1,10 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
-import { RECEIVE_CONTACTS, REQUEST_CONTACTS } from './types';
-import { receiveContacts, requestContacts, fetchContacts } from './contacts';
+import { SET_CONTACTS, REQUEST_CONTACTS, SEARCH_CONTACTS } from './types';
+import {
+  setContacts, requestContacts, fetchContacts, searchContacts,
+} from './contacts';
 
 describe('Contacts actions', () => {
   const middlewares = [thunk];
@@ -24,10 +26,10 @@ describe('Contacts actions', () => {
       { phone_number: '+91 987654321' },
     ];
     const expectedAction = {
-      type: RECEIVE_CONTACTS,
+      type: SET_CONTACTS,
       contacts,
     };
-    expect(receiveContacts(contacts)).toEqual(expectedAction);
+    expect(setContacts(contacts)).toEqual(expectedAction);
   });
 
   it('should fetch contacts', () => {
@@ -41,12 +43,50 @@ describe('Contacts actions', () => {
 
     const expectedActions = [
       { type: REQUEST_CONTACTS },
-      { type: RECEIVE_CONTACTS, contacts },
+      { type: SET_CONTACTS, contacts: [{ phone_number: '+91 987654321', show: true }] },
     ];
     const store = mockStore({ todos: [] });
 
     return store.dispatch(fetchContacts()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
+  });
+
+  it('should search contacts', () => {
+    const contacts = [
+      {
+        name: 'Smple',
+        address: 'addrs',
+        phone_number: '+91 987654321',
+      },
+    ];
+
+    const expectedActions = [
+      { type: SEARCH_CONTACTS, searchText: '9876' },
+      { type: SET_CONTACTS, contacts: [{ ...contacts[0], show: true }] },
+    ];
+    const store = mockStore({ contacts: { items: contacts } });
+
+    store.dispatch(searchContacts('9876'));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('should search contacts with address match', () => {
+    const contacts = [
+      {
+        name: 'Smple',
+        address: 'addrs',
+        phone_number: '+91 987654321',
+      },
+    ];
+
+    const expectedActions = [
+      { type: SEARCH_CONTACTS, searchText: 'addrs' },
+      { type: SET_CONTACTS, contacts: [{ ...contacts[0], show: true }] },
+    ];
+    const store = mockStore({ contacts: { items: contacts } });
+
+    store.dispatch(searchContacts('addrs'));
+    expect(store.getActions()).toEqual(expectedActions);
   });
 });

@@ -6,6 +6,7 @@ export default (
   state = {
     loading: false,
     items: [],
+    searchText: '',
   },
   action,
 ) => {
@@ -15,10 +16,14 @@ export default (
         loading: true,
         items: [],
       });
-    case types.RECEIVE_CONTACTS:
+    case types.SET_CONTACTS:
       return Object.assign({}, state, {
         loading: false,
         items: action.contacts,
+      });
+    case types.SEARCH_CONTACTS:
+      return Object.assign({}, state, {
+        searchText: action.searchText,
       });
     default:
       return state;

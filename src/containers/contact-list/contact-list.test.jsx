@@ -1,5 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
+import { map, set } from 'lodash';
 import { shallow, mount } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
@@ -55,7 +56,7 @@ describe('ContactList container', () => {
   });
 
   it('should render in data state', () => {
-    const store = mockStore({ contacts: { loading: false, items: contacts } });
+    const store = mockStore({ contacts: { loading: false, items: map(contacts, o => set(o, 'show', true)) } });
     const container = mount(<Provider store={store}><ContactListContainer /></Provider>);
     expect(container.find(ContactList).prop('contacts')).toEqual(contacts);
     expect(container.find(ContactList).prop('loading')).toEqual(false);
