@@ -1,5 +1,6 @@
 import React from 'react';
 import { Column, Row } from '../../components/layout';
+import ContactList from '../../containers/contact-list';
 
 const ContactsPage = () => (
   <Column maxWidth="500px" border="1px solid #61dafb" minHeight="400px" borderRadius="4px">
@@ -7,7 +8,7 @@ const ContactsPage = () => (
       Contacts Header
     </Row>
     <Row padding="10px">
-      Contacts
+      <ContactList />
     </Row>
   </Column>
 );

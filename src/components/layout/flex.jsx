@@ -15,6 +15,7 @@ const Flex = styled.div`
   margin: ${props => props.margin};
   color: ${props => props.color};
   background: ${props => props.background};
+  flex: ${props => props.flex};
 `;
 
 Flex.propTypes = {
@@ -30,6 +31,7 @@ Flex.propTypes = {
   padding: PropTypes.string,
   color: PropTypes.string,
   background: PropTypes.string,
+  flex: PropTypes.number,
 };
 
 Flex.defaultProps = {
@@ -45,6 +47,7 @@ Flex.defaultProps = {
   padding: null,
   color: null,
   background: null,
+  flex: 1,
 };
 
 export default Flex;
