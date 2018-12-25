@@ -6,8 +6,19 @@
  * [Jest](https://jestjs.io/)
  * [Enzyme](https://airbnb.io/enzyme/)
  * [Webpack](https://webpack.js.org/)
+ * [Redux](https://redux.js.org)
+ * [styled-components](https://www.styled-components.com/)
+ 
+## Pre-requisites
+
+* Latest version of node installed on the system
+
+Ref: https://nodejs.org/
 
 ## Scripts
+
+### `npm install`
+Installs missing node modules
 
 ### `npm run eslint`
 Runs the eslint on the source and logs the reports
