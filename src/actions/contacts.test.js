@@ -1,9 +1,11 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import fetchMock from 'fetch-mock';
-import { SET_CONTACTS, REQUEST_CONTACTS, SEARCH_CONTACTS } from './types';
 import {
-  setContacts, requestContacts, fetchContacts, searchContacts,
+  SET_CONTACTS, REQUEST_CONTACTS, SEARCH_CONTACTS, SORT_CONTACTS,
+} from './types';
+import {
+  setContacts, requestContacts, fetchContacts, searchContacts, sortContacts,
 } from './contacts';
 
 describe('Contacts actions', () => {
@@ -87,6 +89,54 @@ describe('Contacts actions', () => {
     const store = mockStore({ contacts: { items: contacts } });
 
     store.dispatch(searchContacts('addrs'));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('should sort contacts with name', () => {
+    const contacts = [
+      {
+        name: 'Smple',
+        address: 'addrs',
+        phone_number: '+91 987654321',
+      },
+      {
+        name: 'Ample',
+        address: 'addrs',
+        phone_number: '+91 987654321',
+      },
+    ];
+
+    const expectedActions = [
+      { type: SORT_CONTACTS, sortBy: 'name' },
+      { type: SET_CONTACTS, contacts: [contacts[1], contacts[0]] },
+    ];
+    const store = mockStore({ contacts: { items: contacts } });
+
+    store.dispatch(sortContacts('name'));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('should sort contacts with name reverse', () => {
+    const contacts = [
+      {
+        name: 'Ample',
+        address: 'addrs',
+        phone_number: '+91 987654321',
+      },
+      {
+        name: 'Smple',
+        address: 'addrs',
+        phone_number: '+91 987654321',
+      },
+    ];
+
+    const expectedActions = [
+      { type: SORT_CONTACTS, sortBy: '-name' },
+      { type: SET_CONTACTS, contacts: [contacts[1], contacts[0]] },
+    ];
+    const store = mockStore({ contacts: { items: contacts } });
+
+    store.dispatch(sortContacts('-name'));
     expect(store.getActions()).toEqual(expectedActions);
   });
 });

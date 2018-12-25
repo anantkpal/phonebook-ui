@@ -1,5 +1,9 @@
-import { map, set, includes } from 'lodash';
-import { SET_CONTACTS, REQUEST_CONTACTS, SEARCH_CONTACTS } from './types';
+import {
+  map, set, includes, orderBy,
+} from 'lodash';
+import {
+  SET_CONTACTS, REQUEST_CONTACTS, SEARCH_CONTACTS, SORT_CONTACTS,
+} from './types';
 
 const requestContacts = () => ({
   type: REQUEST_CONTACTS,
@@ -13,6 +17,11 @@ const setContacts = contacts => ({
 const setSearchText = searchText => ({
   type: SEARCH_CONTACTS,
   searchText,
+});
+
+const setSortBy = sortBy => ({
+  type: SORT_CONTACTS,
+  sortBy,
 });
 
 const fetchContacts = () => (dispatch) => {
@@ -33,7 +42,15 @@ const searchContacts = searchText => (dispatch, getState) => {
   return dispatch(setContacts(contacts));
 };
 
+const sortContacts = sortBy => (dispatch, getState) => {
+  dispatch(setSortBy(sortBy));
+  const { items } = getState().contacts;
+  const contacts = orderBy(items, [sortBy.replace('-', '')], [sortBy.indexOf('-') === 0 ? 'desc' : 'asc']);
+  return dispatch(setContacts(contacts));
+};
+
 export {
+  sortContacts,
   searchContacts,
   requestContacts,
   fetchContacts,

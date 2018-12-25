@@ -7,6 +7,7 @@ export default (
     loading: false,
     items: [],
     searchText: '',
+    sortBy: '',
   },
   action,
 ) => {
@@ -24,6 +25,10 @@ export default (
     case types.SEARCH_CONTACTS:
       return Object.assign({}, state, {
         searchText: action.searchText,
+      });
+    case types.SORT_CONTACTS:
+      return Object.assign({}, state, {
+        sortBy: action.sortBy,
       });
     default:
       return state;
