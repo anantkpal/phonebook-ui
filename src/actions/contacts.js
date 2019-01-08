@@ -26,7 +26,7 @@ const setSortBy = sortBy => ({
 
 const fetchContacts = () => (dispatch) => {
   dispatch(requestContacts());
-  return fetch('http://www.mocky.io/v2/581335f71000004204abaf83')
+  return fetch(PHONEBOOK_API)
     .then(response => response.json())
     .then(json => dispatch(setContacts(map(json.contacts, o => set(o, 'show', true)))));
 };

@@ -1,5 +1,5 @@
-const webpackCommon = require('./webpack.config.common');
 const webpack = require('webpack');
+const webpackCommon = require('./webpack.config.common');
 
 module.exports = {
   mode: 'development',
@@ -13,6 +13,9 @@ module.exports = {
   entry: webpackCommon.entry,
   plugins: [
     ...webpackCommon.plugins,
+    new webpack.DefinePlugin({
+      PHONEBOOK_API: JSON.stringify('http://phonebook-api:9090'),
+    }),
     new webpack.HotModuleReplacementPlugin(),
   ],
   output: webpackCommon.output,

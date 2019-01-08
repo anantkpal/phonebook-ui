@@ -38,7 +38,7 @@ describe('Contacts actions', () => {
     const contacts = [
       { phone_number: '+91 987654321' },
     ];
-    fetchMock.getOnce('http://www.mocky.io/v2/581335f71000004204abaf83 ', {
+    fetchMock.getOnce(PHONEBOOK_API, {
       body: { contacts },
       headers: { 'content-type': 'application/json' },
     });
